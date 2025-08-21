@@ -5,6 +5,7 @@ import com.udemyjavamicro.springcloud.usuarios.msvcusuarios.repository.UserRepos
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -39,8 +40,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void eliminar(Long id) {
         userRepo.deleteById(id);
+    }
+
+    @Override
+    public Optional<List<Usuario>> buscarVariosIds(List<Long> ids) {
+        List<Usuario> usuarios = (List<Usuario>) userRepo.findAllById(ids);
+        return Optional.of(usuarios);
     }
 
 }

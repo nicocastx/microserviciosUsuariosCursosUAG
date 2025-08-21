@@ -98,4 +98,19 @@ public class CursoServiceImpl implements CursoService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Curso> porIdConUsuarios(Long idCurso) {
+        Optional<Curso> o = cursoRepository.findById(idCurso);
+        if (o.isPresent()){
+            Curso curso = o.get();
+            if (!curso.getCursoUsuario().isEmpty()){
+                List<Long> ids = curso.getCursoUsuario().stream().map(CursoUsuario::getUsuarioId).toList();
+                List<Usuario> usuarios = clientUsuario.buscarPorIds(ids);
+                curso.setUsuarios(usuarios);
+            }
+            return Optional.of(curso);
+        }
+        return Optional.empty();
+    }
 }

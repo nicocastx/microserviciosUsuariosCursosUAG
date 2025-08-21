@@ -28,7 +28,8 @@ public class CursoControllerImpl implements CursoController {
 
     @Override
     public ResponseEntity<?> porId(Long id) {
-        if (cursoService.porId(id).isPresent()) {
+        Optional<Curso> c = cursoService.porIdConUsuarios(id);
+        if (c.isPresent()) {
             return ResponseEntity.ok(cursoService.porId(id).get());
         } else {
             return ResponseEntity.notFound().build();
@@ -51,24 +52,16 @@ public class CursoControllerImpl implements CursoController {
             Map<String, String> errors = validar(result);
             return ResponseEntity.badRequest().body(errors);
         }
-        try {
-            Curso cursoDb = cursoService.porId(id).orElseThrow();
-            cursoDb.setNombre(curso.getNombre());
-            return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.guardar(cursoDb));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Curso cursoDb = cursoService.porId(id).orElseThrow();
+        cursoDb.setNombre(curso.getNombre());
+        return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.guardar(cursoDb));
 
     }
 
     @Override
     public ResponseEntity<?> eliminar(Long id) {
-        try {
-            cursoService.eliminar(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        cursoService.eliminar(id);
+        return ResponseEntity.ok().build();
     }
 
     @Override
@@ -79,11 +72,9 @@ public class CursoControllerImpl implements CursoController {
             if (u.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(u.get());
             }
-        } catch(FeignException e){
+        } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
-        } catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
         }
 
         return ResponseEntity.notFound().build();
@@ -97,10 +88,10 @@ public class CursoControllerImpl implements CursoController {
             if (u.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(u.get());
             }
-        } catch(FeignException e){
+        } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
         return ResponseEntity.notFound().build();
@@ -114,10 +105,10 @@ public class CursoControllerImpl implements CursoController {
             if (u.isPresent()) {
                 return ResponseEntity.status(HttpStatus.OK).body(u.get());
             }
-        } catch(FeignException e){
+        } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
         return ResponseEntity.notFound().build();

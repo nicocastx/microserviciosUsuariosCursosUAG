@@ -98,6 +98,20 @@ public class UserController {
 
     }
 
+    @GetMapping("/buscarPorIds")
+    public ResponseEntity<?> buscarPorIds(@RequestParam List<Long> ids){
+        try {
+            return ResponseEntity.ok().body(userService.buscarVariosIds(ids));
+        } catch (NoSuchElementException e) {
+            System.out.println("El usuario buscado no existe");
+            return ResponseEntity.notFound().build();
+
+        } catch (Exception e){
+            System.out.println("Error en GET por ID de usuario desconocido");
+            return ResponseEntity.internalServerError().body(new ExceptionResponse(e, HttpStatus.INTERNAL_SERVER_ERROR.value()).showError());
+        }
+    }
+
     private Map<String, String> validar(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
         result.getFieldErrors().forEach(err ->
@@ -105,4 +119,5 @@ public class UserController {
         );
         return errors;
     }
+
 }

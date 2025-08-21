@@ -20,4 +20,5 @@ public interface CursoService {
     Optional<Usuario> crearUsuario(Usuario usuario, Long idCurso);
     //Esto seria para desasignar un Usuario de un curso
     Optional<Usuario> eliminarUsuario(Usuario usuario, Long idCurso);
+    Optional<Curso> porIdConUsuarios(Long idCurso);
 }

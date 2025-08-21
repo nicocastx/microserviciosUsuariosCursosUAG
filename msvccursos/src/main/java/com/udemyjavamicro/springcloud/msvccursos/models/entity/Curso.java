@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
@@ -22,8 +23,9 @@ public class Curso {
     private Long id;
 
     @NotBlank
+    @Length(min = 3)
+    @NotBlank
     private String nombre;
-
     //cascade me dice que cuando se cree o elimine un curso, tambien va a revisarse a los usuarios
     //orphanRemoval es para eliminar aquellas relaciones CursoUsuario que no tengan un curso
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)

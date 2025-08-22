@@ -1,7 +1,9 @@
 package com.udemyjavamicro.springcloud.usuarios.msvcusuarios.services;
 
+import com.udemyjavamicro.springcloud.usuarios.msvcusuarios.clients.CursoFeignClient;
 import com.udemyjavamicro.springcloud.usuarios.msvcusuarios.models.entity.Usuario;
 import com.udemyjavamicro.springcloud.usuarios.msvcusuarios.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,13 +13,11 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepo;
-
-    public UserServiceImpl(UserRepository userRepo) {
-        this.userRepo = userRepo;
-    }
+    private CursoFeignClient cursoFeignClient;
 
     @Override
     @Transactional(readOnly = true)
@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void eliminar(Long id) {
+        cursoFeignClient.eliminarCursoUsuarios(id);
         userRepo.deleteById(id);
     }
 

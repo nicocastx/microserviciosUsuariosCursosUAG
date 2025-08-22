@@ -80,7 +80,12 @@ public class CursoControllerImpl implements CursoController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/crear-usuario/{idCurso}")
+    @Override
+    public ResponseEntity<?> eliminarCursoUsuarios(Long id) {
+        cursoService.eliminarCursoUsuarioPorId(id);
+        return ResponseEntity.ok().build();
+    }
+
     public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long idCurso) {
         Optional<Usuario> u = null;
         try {
@@ -97,8 +102,7 @@ public class CursoControllerImpl implements CursoController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/eliminar-usuario/{idCurso}")
-    public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario, @PathVariable Long idCurso) {
+    public ResponseEntity<?> eliminarCursoUsuarios(@RequestBody Usuario usuario, @PathVariable Long idCurso) {
         Optional<Usuario> u = null;
         try {
             u = cursoService.eliminarUsuario(usuario, idCurso);

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "msvcusuarios", url = "http://localhost:8081")
+@FeignClient(name = "msvcusuarios", url = "http://localhost:8001")
 //Las peticiones se setean con los metodos del controller
 public interface UsuarioFeignClients {
     @GetMapping("/{id}")

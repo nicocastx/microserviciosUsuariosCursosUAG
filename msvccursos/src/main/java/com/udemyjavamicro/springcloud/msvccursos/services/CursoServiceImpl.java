@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -23,7 +24,14 @@ public class CursoServiceImpl implements CursoService {
     @Override
     @Transactional(readOnly = true)
     public List<Curso> listar() {
-        return (List<Curso>) cursoRepository.findAll();
+        List<Curso> cursos = new ArrayList<>();
+        cursoRepository.findAll().forEach(curso ->{
+            List<Long> ids = curso.getCursoUsuario().stream().map(CursoUsuario::getUsuarioId).toList();
+            List<Usuario> usuarios = clientUsuario.buscarPorIds(ids);
+            curso.setUsuarios(usuarios);
+            cursos.add(curso);
+        });
+        return cursos;
     }
 
     @Override

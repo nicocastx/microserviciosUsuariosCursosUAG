@@ -4,7 +4,6 @@ import com.udemyjavamicro.springcloud.usuarios.msvcusuarios.config.properties.Em
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component

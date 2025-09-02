@@ -5,7 +5,6 @@ import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
-//Quise probar si podia implementar un component de spring en un validador... y resulto mas complejo de lo que esperaba
 // CONCLUSION:
 /**
  * Aun tengo el toque, resulta que si aparece un error de init, no es porque este mal el constructor, es porque por dentro esta pasando algo mal

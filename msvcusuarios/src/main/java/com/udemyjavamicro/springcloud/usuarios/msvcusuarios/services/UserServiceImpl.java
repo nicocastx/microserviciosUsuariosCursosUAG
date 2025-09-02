@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> list() {
-        return StreamSupport.stream(
-                userRepo.findAll().spliterator(), false)
-                .toList();
+        List<Usuario> users = new ArrayList<>();
+        userRepo.findAll().forEach(users::add);
+        return users;
     }
 
     @Override
@@ -51,5 +51,4 @@ public class UserServiceImpl implements UserService{
         List<Usuario> usuarios = (List<Usuario>) userRepo.findAllById(ids);
         return Optional.of(usuarios);
     }
-
 }

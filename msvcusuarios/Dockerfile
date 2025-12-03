@@ -1,4 +1,4 @@
-FROM maven:3.9.8-amazoncorretto-21 as build
+FROM maven:3.9.8-amazoncorretto-21 AS build
 
 WORKDIR /app/msvcusuarios
 
@@ -20,6 +20,8 @@ WORKDIR /app
 
 COPY --from=build app/msvcusuarios/target/msvcusuarios-0.0.1-SNAPSHOT.jar .
 
-EXPOSE 8081
+ENV PORT=8081
+
+EXPOSE $PORT
 
 ENTRYPOINT ["java", "-jar", "msvcusuarios-0.0.1-SNAPSHOT.jar"]

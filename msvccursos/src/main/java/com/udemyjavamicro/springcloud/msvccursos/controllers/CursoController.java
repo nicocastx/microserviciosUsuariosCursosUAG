@@ -21,8 +21,8 @@ public interface CursoController {
 
     @PostMapping("/crear-usuario/{idCurso}")
     public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long idCurso);
-    @PutMapping("/asignar-usuario/{cursoId}")
-    ResponseEntity<?> asignarUsuario(@PathVariable Long cursoId, @RequestBody Usuario usuario);
+    @PutMapping("/asignar-usuario/{idCurso}")
+    ResponseEntity<?> asignarUsuario(@PathVariable Long idCurso , @RequestBody Usuario usuario);
     @DeleteMapping("/eliminar-usuario/{idCurso}")
     public ResponseEntity<?> eliminarCursoUsuarios(@RequestBody Usuario usuario, @PathVariable Long idCurso);
     @DeleteMapping("/eliminar-usuario-cursos/{id}")

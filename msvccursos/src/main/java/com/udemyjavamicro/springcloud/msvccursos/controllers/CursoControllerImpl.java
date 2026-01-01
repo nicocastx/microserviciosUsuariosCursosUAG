@@ -4,7 +4,6 @@ import com.udemyjavamicro.springcloud.msvccursos.models.Usuario;
 import com.udemyjavamicro.springcloud.msvccursos.models.entity.Curso;
 import com.udemyjavamicro.springcloud.msvccursos.services.CursoService;
 import feign.FeignException;
-import feign.Response;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,10 +64,10 @@ public class CursoControllerImpl implements CursoController {
     }
 
     @Override
-    public ResponseEntity<?> asignarUsuario(Long cursoId, Usuario usuario) {
+    public ResponseEntity<?> asignarUsuario(Long idCurso, Usuario usuario) {
         Optional<Usuario> u = null;
         try {
-            u = cursoService.asignarUsuario(usuario, cursoId);
+            u = cursoService.asignarUsuario(usuario, idCurso);
             if (u.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(u.get());
             }
